@@ -1,0 +1,8 @@
+### ADR-001: Separated Client-Server Architecture
+
+**Status:** Inferred
+**Context:** The application requires a user-facing interface for interaction and a backend service to handle business logic, data persistence, and computationally intensive tasks like AI integration. A decision was needed on how to structure these components: as a single monolithic application or as separate, communicating services.
+**Decision:** A separated client-server (or "headless") architecture was chosen. The frontend is a standalone Single-Page Application (SPA) located in the `learn-spark-ai-buddy` directory, while the backend is a distinct Node.js application in the `server` directory. These two applications communicate over a network via an API.
+**Consequences:**
+*   **Positive:** This separation of concerns allows for independent development, testing, deployment, and scaling of the frontend and backend. Different teams can specialize and work on each part concurrently. The frontend can be hosted on a CDN for performance, while the backend can be scaled based on its specific resource needs.
+*   **Negative:** This introduces complexity in managing the API contract between the client and server. It requires handling Cross-Origin Resource Sharing (CORS), as seen by the `cors` dependency in the server. Overall system complexity is higher than a monolith due to the need for separate deployment pipelines and network communication management.

@@ -1,0 +1,8 @@
+### ADR-001: MAPE-K Control Loop for Self-Adaptation
+
+**Status:** Inferred
+**Context:** The system, named "EcoMLS," needs to operate dynamically and adapt its behavior at runtime. The core challenge is to manage system resources and performance goals, specifically related to energy consumption (as suggested by "Eco" in the name and files like `MAPEK_energy.csv`). A structured approach is required to continuously observe the system and its environment, reason about its state, and execute changes to meet its objectives.
+**Decision:** A MAPE-K (Monitor-Analyze-Plan-Execute over a Knowledge base) architectural pattern was chosen as the core of the self-adaptive system. This is directly evidenced by the presence of dedicated Python modules for each phase: `Monitor.py`, `Analyzer.py`, `Planner.py`, and `Execute.py`. The "Knowledge" component is implemented via a file-based approach, indicated by `knowledge.csv`.
+**Consequences:**
+*   **Positive:** This decision creates a clear separation of concerns for the adaptation logic. Each component has a well-defined responsibility, making the system easier to understand, maintain, and extend. It provides a robust and well-established framework for building autonomous, self-adaptive systems.
+*   **Negative:** The MAPE-K loop introduces more components and complexity compared to a static, non-adaptive system. The overhead of the control loop itself (monitoring, analyzing, etc.) consumes system resources, which must be factored into the overall energy budget.

@@ -1,0 +1,8 @@
+### ADR-001: Self-Adaptive System via MAPE-K Pattern
+
+**Status:** Inferred
+**Context:** The system needs to operate autonomously and maintain performance in a dynamic environment. Machine learning models, a core component of this system, can suffer from performance degradation over time due to concept drift (changes in the underlying data distribution). A manual process for detecting drift and retraining models would be inefficient and slow. The challenge was to design a system that could automatically monitor its own performance, detect issues, and take corrective action.
+**Decision:** The MAPE-K (Monitor-Analyze-Plan-Execute over a Knowledge Base) architectural pattern was implemented. This is evident from the `mape/` directory, which contains modules corresponding to each phase of the loop (`monitor.py`, `analyse.py`, `plan.py`, `execute.py`). The `knowledge/` directory serves as the Knowledge Base, storing shared state, metrics, and models used by the different phases of the loop.
+**Consequences:**
+*   **Positive:** The system is capable of autonomic self-adaptation, for instance, by detecting model drift and triggering retraining. This increases resilience and reduces the need for manual intervention. The architecture provides a clear separation of concerns for each stage of the adaptation process, making the system more modular and easier to understand.
+*   **Negative:** The implementation is more complex than a static application. The logic for each MAPE-K phase must be carefully designed and tested. The interactions between the components and the knowledge base can introduce potential race conditions or inconsistencies if not managed properly.
